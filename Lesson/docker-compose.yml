@@ -15,7 +15,7 @@ services:
     ports:
       - "5435:5432" # Lokal makinenin 5435 portunu container'ın 5432'sine bağla
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
 volumes:
   postgres_data: # Veritabanı kapansa bile datanın kaybolmaması için volume (kalıcı disk)
