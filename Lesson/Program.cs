@@ -1,6 +1,7 @@
 ﻿
 using Lesson.Data;
 using Lesson.Middleware;
+using Lesson.Repositories;
 using Lesson.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,7 +35,7 @@ namespace Lesson
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
-
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IProductService, ProductService>();
 
             #endregion
@@ -50,13 +51,13 @@ namespace Lesson
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            app.UseMiddleware<SimpleLoggingMiddleware>(); // Bizim özel middleware'ı ekliyoruz.
             app.UseHttpsRedirection();
+            app.UseRouting();
+            app.UseMiddleware<SimpleLoggingMiddleware>(); // Bizim özel middleware'ı ekliyoruz.
+            //Authentication varsa burada eklenir , öncesinde de builder.Services.AddAuthentication(...) eklenir.
             app.UseAuthorization();
-
             // Lesson: Routing (Yönlendirme)
             // 'UseRouting' ve 'MapControllers' birlikte çalışır. UseRouting: Gelen URL'i analiz eder ve hangi 'Endpoint'in (Controller Action) çalışacağına karar verir.
-            app.UseRouting();   
             app.MapControllers();
 
             app.Run();
