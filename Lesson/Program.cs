@@ -1,3 +1,8 @@
+﻿
+using Lesson.Data;
+using Lesson.Middleware;
+using Lesson.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Lesson
 {
@@ -7,27 +12,51 @@ namespace Lesson
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            /*
+             * Lesson : Dependency Injection (DI) - (Lifetime - Yaşam Döngüleri)
+             * 
+             * 'builder.Services' koleksiyonu, .NET'in DI Container'ıdır. ***** Önemli !
+             *  
+             *  Buraya hangi 'interface' istendiğinde hangi 'class'ın örneğinin verileceğini kaydederiz.
+             * 
+             * AddScoped: (En yaygını) Nesne, her HTTP 'isteği' (request) için bir kez oluşturulur ve o istek boyunca kullanılır. (örn: AppDbContext, ProductService)
+             * AddTransient: Nesne, her 'talep edildiğinde' (enjekte edildiğinde) yeni bir örnek olarak oluşturulur.
+             * AddSingleton: Nesne, uygulama başladığında bir kez oluşturulur ve uygulama kapanana kadar hep aynı örnek kullanılır. (örn: ILogger, Caching)
+             * 
+             * 
+             */
+
+            #region 1- Builder.Services DI Container'a Servis Ekleme
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddEndpointsApiExplorer(); // Learn about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddSwaggerGen();
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+
+            builder.Services.AddScoped<IProductService, ProductService>();
+
+            #endregion
+
+            // HTTP Request Pipeline (Middleware Sırası Önemlidir!) ---
+            // Lesson: Middleware (Pipeline)
+            // İstekler bu 'Use...' metotlarından sırayla geçer.
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.Lifetime.ApplicationStarted.Register(() => { Console.WriteLine($"App started (ApplicationStarted) in {app.Environment.EnvironmentName}"); }); // Hangi mod açık ise onu yazar (Development, Production, Staging)    
 
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+            app.UseMiddleware<SimpleLoggingMiddleware>(); // Bizim özel middleware'ı ekliyoruz.
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
-
+            // Lesson: Routing (Yönlendirme)
+            // 'UseRouting' ve 'MapControllers' birlikte çalışır. UseRouting: Gelen URL'i analiz eder ve hangi 'Endpoint'in (Controller Action) çalışacağına karar verir.
+            app.UseRouting();   
             app.MapControllers();
 
             app.Run();
