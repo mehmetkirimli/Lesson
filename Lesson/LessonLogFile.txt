@@ -21,3 +21,35 @@ System.Exception: Bu isimde zaten bir ürün var.
    at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
    at Lesson.Middleware.SimpleLoggingMiddleware.InvokeAsync(HttpContext context) in C:\Users\mehmet.kirimli\Desktop\Lefoonten\Deneme\Lesson\Lesson\Middleware\SimpleLoggingMiddleware.cs:line 36
 
+----------------------------------------------------------------------
+Tarih : 2025-10-28 15:09:17.222 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /api/Products
+Status : 201
+Süre   : 26574 ms
+Özet   : HTTP Request Handled POST /api/Products => Responded 201
+
+----------------------------------------------------------------------
+Tarih : 2025-10-28 15:10:49.243 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/Products/1
+Status : 200
+Süre   : 1369 ms
+Özet   : HTTP Request Handled GET /api/Products/1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-28 15:11:07.627 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /api/Products
+Status : 201
+Süre   : 3769 ms
+Özet   : HTTP Request Handled POST /api/Products => Responded 201
+
+----------------------------------------------------------------------
+Tarih : 2025-10-28 15:11:58.310 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/Products
+Status : 200
+Süre   : 48 ms
+Özet   : HTTP Request Handled GET /api/Products => Responded 200
+

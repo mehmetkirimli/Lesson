@@ -96,7 +96,8 @@ namespace Lesson.Services
             {
                 Name = createDto.Name,
                 Price = createDto.Price,
-                Description = createDto.Description
+                Description = createDto.Description,
+                CreatedAt = DateTime.UtcNow
             };
 
             // 3) Kaydet ve DB-constraint hata yakala (race condition durumunda)
