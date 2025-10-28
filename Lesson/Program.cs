@@ -1,5 +1,6 @@
 ﻿
 using Lesson.Data;
+using Lesson.Helper;
 using Lesson.Middleware;
 using Lesson.Repositories;
 using Lesson.Services;
@@ -37,6 +38,7 @@ namespace Lesson
             builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddSingleton<IFileLogger, FileLogger>();
 
             #endregion
 
