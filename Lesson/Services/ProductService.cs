@@ -3,6 +3,8 @@ using Lesson.DTOs;
 using Lesson.Entities;
 using Lesson.Repositories;
 using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Lesson.Services
 {
@@ -84,6 +86,12 @@ namespace Lesson.Services
 
         public async Task<ProductDto> CreateProductAsync(CreateProductDto createDto)
         {
+            // 1) Var mı kontrolü (performant)
+            var exists = await repo.Query().AnyAsync(p => p.Name == createDto.Name);
+            if (exists)
+                throw new InvalidOperationException("Bu isimde zaten bir ürün var.");
+
+            // 2) Entity yarat
             var product = new Product
             {
                 Name = createDto.Name,
@@ -91,19 +99,24 @@ namespace Lesson.Services
                 Description = createDto.Description
             };
 
-            var data = repo.FindAsync(p => p.Name == createDto.Name);
-
-            if(data != null)
+            // 3) Kaydet ve DB-constraint hata yakala (race condition durumunda)
+            try
             {
-                throw new Exception("Bu isimde zaten bir ürün var.");
+                await repo.AddAsync(product);
+                await repo.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException is PostgresException pgEx && pgEx.SqlState == "23505")
+                {
+                    // unique violation
+                    throw new InvalidOperationException("Bu isimde zaten bir ürün var. (db constraint)");
+                }
+                throw;
             }
 
-            await repo.AddAsync(product);
-            await repo.SaveChangesAsync(); // Değişiklikleri kaydet
-
-
-            // Oluşturulan ürünü DTO olarak geri dönüyoruz.
-            return (await GetProductByIdAsync(product.Id))!;
+            // 4) DTO dön (isteğe bağlı, yeniden fetch vs.)
+            return await GetProductByIdAsync(product.Id);
         }
 
         public async Task UpdateProductStockWithTransactionAsync(int id, int amount)
