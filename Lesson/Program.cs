@@ -1,6 +1,7 @@
 ﻿
 using Lesson.Data;
 using Lesson.Helper;
+using Lesson.Hubs;
 using Lesson.Middleware;
 using Lesson.Repositories;
 using Lesson.Services;
@@ -31,6 +32,8 @@ namespace Lesson
             #region 1- Builder.Services DI Container'a Servis Ekleme
 
             builder.Services.AddControllers();
+
+            builder.Services.AddSignalR(); // SignalR servisi
             builder.Services.AddEndpointsApiExplorer(); // Learn about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddSwaggerGen();
 
@@ -58,6 +61,10 @@ namespace Lesson
             app.UseMiddleware<SimpleLoggingMiddleware>(); // Bizim özel middleware'ı ekliyoruz.
             //Authentication varsa burada eklenir , öncesinde de builder.Services.AddAuthentication(...) eklenir.
             app.UseAuthorization();
+
+            // İstemcilerin (Blazor, JavaScript) bağlanacağı adres budur.
+            app.MapHub<ProductHub>("/productHub");
+
             // Lesson: Routing (Yönlendirme)
             // 'UseRouting' ve 'MapControllers' birlikte çalışır. UseRouting: Gelen URL'i analiz eder ve hangi 'Endpoint'in (Controller Action) çalışacağına karar verir.
             app.MapControllers();

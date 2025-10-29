@@ -53,3 +53,19 @@ Status : 200
 Süre   : 48 ms
 Özet   : HTTP Request Handled GET /api/Products => Responded 200
 
+----------------------------------------------------------------------
+Tarih : 2025-10-29 12:25:34.705 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub
+Status : 400
+Süre   : 19 ms
+Özet   : HTTP Request Handled GET /productHub => Responded 400
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 12:25:34.841 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /favicon.ico
+Status : 404
+Süre   : 0 ms
+Özet   : HTTP Request Handled GET /favicon.ico => Responded 404
+

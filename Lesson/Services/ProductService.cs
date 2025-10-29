@@ -5,6 +5,8 @@ using Lesson.Repositories;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using Microsoft.AspNetCore.SignalR; // <-- 1. BUNU EKLE
+using Lesson.Hubs;                 // <-- 2. BUNU EKLE
 
 namespace Lesson.Services
 {
@@ -19,14 +21,17 @@ namespace Lesson.Services
         private readonly IRepository<Product> repo;
         private readonly AppDbContext _context;
 
+        private readonly IHubContext<ProductHub> _hubContext; // <-- Yeni alan , DI ile Hub'a erişilcek.
+
         // Lesson: Dependency Injection (DI) - 2. Kural (Constructor Injection)
         // Bu sınıf, ihtiyaç duyduğu 'AppDbContext'i 'new' ile kendi oluşturmaz.
         // DI container'dan (Program.cs) constructor aracılığıyla ister.
 
-        public ProductService(IRepository<Product> productRepo, AppDbContext context)
+        public ProductService(IRepository<Product> productRepo, AppDbContext context, IHubContext<ProductHub> hubContext)
         {
             repo = productRepo;
             _context = context;
+            _hubContext = hubContext; // <-- HubContext'i constructor içinde DI ile al.
         }
 
         // Lesson: DB çağrıları I/O bound; async/await kullanmak uygulamanın thread havuzunu verimli kullanmasını sağlar(özellikle web server).
@@ -116,8 +121,22 @@ namespace Lesson.Services
                 throw;
             }
 
-            // 4) DTO dön (isteğe bağlı, yeniden fetch vs.)
-            return await GetProductByIdAsync(product.Id);
+            // Veritabanı işlemi bittikten sonra DTO oluştur
+            var newProductDto = new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                Description = product.Description
+            };
+
+            // Lesson: SignalR (Sunucudan Mesaj Gönderme)
+            // O an bağlı olan 'Tüm' istemcilere ('All') "ProductCreated" adında bir mesaj yolla.
+            // Mesajın içeriği olarak da yeni oluşturulan 'newProductDto'yu yolla.
+            await _hubContext.Clients.All.SendAsync("ProductCreated", newProductDto);
+
+            // Bu kod da zaten vardı:
+            return newProductDto;
         }
 
         public async Task UpdateProductStockWithTransactionAsync(int id, int amount)
