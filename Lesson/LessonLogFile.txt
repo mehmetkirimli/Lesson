@@ -69,3 +69,43 @@ Status : 404
 Süre   : 0 ms
 Özet   : HTTP Request Handled GET /favicon.ico => Responded 404
 
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:17:58.013 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 1661 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:17:58.698 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 61 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:19:26.869 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /api/Products
+Status : 201
+Süre   : 11055 ms
+Özet   : HTTP Request Handled POST /api/Products => Responded 201
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:20:36.522 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 13 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:20:36.728 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 5 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
