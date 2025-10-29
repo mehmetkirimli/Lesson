@@ -29,6 +29,21 @@ namespace Lesson
              * 
              */
 
+            // Lesson: CORS (Cross-Origin Resource Sharing)
+            // CORS politikasını DI konteynerine ekliyoruz.
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("https://localhost:7267") // <-- BLOK 1: Blazor'un adresine izin ver
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials();                    // <-- BLOK 2: SignalR'ın kimlik bilgileriyle bağlanması için bu ŞART!
+                                  });
+            });
+
             #region 1- Builder.Services DI Container'a Servis Ekleme
 
             builder.Services.AddControllers();
@@ -58,6 +73,11 @@ namespace Lesson
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            // Lesson: CORS Middleware (Sıralama)
+            // CORS ara katmanını, UseRouting'den SONRA, UseAuthorization ve MapControllers'dan ÖNCE ekliyoruz.
+            app.UseCors(MyAllowSpecificOrigins); // CORS ara katmanını ekliyoruz.
+
             app.UseMiddleware<SimpleLoggingMiddleware>(); // Bizim özel middleware'ı ekliyoruz.
             //Authentication varsa burada eklenir , öncesinde de builder.Services.AddAuthentication(...) eklenir.
             app.UseAuthorization();

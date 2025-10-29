@@ -63,7 +63,7 @@ else
 
         // 2. SignalR Hub'ına Bağlanmak
         // Hub'ın tam adresini oluşturuyoruz (örn: https://localhost:7220/productHub)
-        var hubUrl = new Uri(NavigationManager.BaseUri + "/productHub"); // API Adresi https olmalı!
+        var hubUrl = new Uri(httpClient.BaseAddress!, "/productHub"); // API Adresi https olmalı! BaseAddress!'in sonundaki ! "null olmayacağına eminim" demektir.
         
         // DİKKAT: API'miz (Lesson) HTTPS kullanıyorsa ama sertifikası güvenli değilse (development) aşağıdaki 'options' gerekebilir.
         hubConnection = new HubConnectionBuilder()
