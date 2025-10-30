@@ -1,125 +1,15 @@
 ﻿@page "/"
-@inject IHttpClientFactory HttpClientFactory
-@inject NavigationManager NavigationManager
-@implements IAsyncDisposable
 
-<PageTitle>Ürün Listesi (Canlı)</PageTitle>
+<PageTitle>Ana Sayfa</PageTitle>
 
-<h1>Ürün Listesi (Gerçek Zamanlı)</h1>
-
-@if (products == null)
-{
-    <p><em>Ürünler API'den yükleniyor...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>İsim</th>
-                <th>Fiyat</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in products)
-            {
-                <tr>
-                    <td>@product.Id</td>
-                    <td>@product.Name</td>
-                    <td>@product.Price.ToString("C")</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-@code {
-    // Lesson: DTO Referansı
-    // DTOs klasörünü manuel kopyaladığımız için Blazor bu sınıfı tanıyor.
-    private List<ProductDto>? products;
-
-    // Lesson: SignalR Hub Bağlantısı
-    // SignalR Hub'ı ile bağlantıyı tutacak olan değişken.
-    private HubConnection? hubConnection;
-
-    // Lesson: Sayfa Yaşam Döngüsü (OnInitialized)
-    // Bu metot, Blazor sayfası ekrana ilk kez yüklenirken çalışır.
-    // API'den ilk veriyi çekmek ve SignalR bağlantısını başlatmak için ideal yerdir.
-    protected override async Task OnInitializedAsync()
-    {
-        // 1. API'ye HTTP İsteği Atmak (İlk Veriyi Çekmek)
-        var httpClient = HttpClientFactory.CreateClient("ApiHttpClient");
-        try
-        {
-            // API'mizdeki 'GET /api/products' endpoint'ine istek atıyoruz.
-            products = await httpClient.GetFromJsonAsync<List<ProductDto>>("api/products");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"API'den veri çekerken hata: {ex.Message}");
-            products = new List<ProductDto>(); // Hata olursa boş liste göster
-        }
-
-        // 2. SignalR Hub'ına Bağlanmak
-        // Hub'ın tam adresini oluşturuyoruz (örn: https://localhost:7220/productHub)
-        var hubUrl = new Uri(httpClient.BaseAddress!, "/productHub"); // API Adresi https olmalı! BaseAddress!'in sonundaki ! "null olmayacağına eminim" demektir.
-        
-        // DİKKAT: API'miz (Lesson) HTTPS kullanıyorsa ama sertifikası güvenli değilse (development) aşağıdaki 'options' gerekebilir.
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(hubUrl, options =>
-            {
-                // Lesson: HTTPS (Development)
-                // Lokal 'https' sertifikasına güvenmesi için bu ayar gerekebilir.
-                options.HttpMessageHandlerFactory = (msg) =>
-                {
-                    if (msg is HttpClientHandler handler)
-                    {
-                        handler.ServerCertificateCustomValidationCallback = 
-                            (sender, cert, chain, sslPolicyErrors) => { return true; };
-                    }
-                    return msg;
-                };
-            })
-            .Build();
-
-        // Lesson: SignalR (İstemci Tarafı - Mesaj Dinleme)
-        // Sunucudan (API) "ProductCreated" adında bir mesaj gelirse ne yapacağımızı 'On' metodu ile tanımlıyoruz.
-        hubConnection.On<ProductDto>("ProductCreated", (newProduct) =>
-        {
-            if (products != null)
-            {
-                // Listeye yeni ürünü ekle
-                products.Add(newProduct);
-
-                // Lesson: Blazor (UI Güncelleme)
-                // SignalR'dan gelen mesaj 'arka planda' (background thread) işlenir.
-                // Blazor'a "Listeyi güncelledim, arayüzü yeniden çiz" demek için
-                // 'StateHasChanged()' çağırmak zorundayız.
-                InvokeAsync(StateHasChanged);
-            }
-        });
-
-        // 3. SignalR Bağlantısını Başlat
-        try
-        {
-            await hubConnection.StartAsync();
-            Console.WriteLine("SignalR Hub'ına başarıyla bağlandı.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"SignalR bağlantı hatası: {ex.Message}");
-        }
-    }
-
-    // Lesson: Bellek Yönetimi (Dispose)
-    // Kullanıcı bu sayfadan ayrıldığında (örn: Başka bir sayfaya geçtiğinde)
-    // SignalR bağlantısını kapatmamız gerekir. Kapatmazsak 'memory leak' (bellek sızıntısı) olur.
-    public async ValueTask DisposeAsync()
-    {
-        if (hubConnection is not null)
-        {
-            await hubConnection.DisposeAsync();
-        }
-    }
-}
+<h1>Eğitim Projesine Hoş Geldin! 👋</h1>
+<hr />
+<p>
+    Soldaki menüden ürünleri listeleyebilir (<b>Fetch data</b>) veya
+    yeni ürün ekleyebilirsin (<b>Yeni Ürün Ekle</b>).
+</p>
+<p>
+    Bu arayüz, API'mize bağlı SignalR Hub'ını dinler.
+    API'ye yeni bir ürün eklendiğinde, 'Fetch data' sayfasındaki liste
+    anında (real-time) güncellenir.
+</p>

@@ -1,0 +1,65 @@
+﻿@page "/add-product"
+@inject IHttpClientFactory HttpClientFactory
+@inject NavigationManager NavigationManager
+
+<h3>Yeni Ürün Ekle</h3>
+
+<EditForm Model="@newProduct" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    
+    <div class="mb-3">
+        <label for="name" class="form-label">Ürün Adı:</label>
+        <InputText id="name" class="form-control" @bind-Value="newProduct.Name" />
+        <ValidationMessage For="@(() => newProduct.Name)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="price" class="form-label">Fiyat:</label>
+        <InputNumber id="price" class="form-control" @bind-Value="newProduct.Price" />
+        <ValidationMessage For="@(() => newProduct.Price)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Açıklama:</label>
+        <InputTextArea id="description" class="form-control" @bind-Value="newProduct.Description" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</EditForm>
+
+@code {
+    // Lesson: DTO (Form Modeli)
+    // Formu bağlamak için 'CreateProductDto' sınıfının bir örneğini oluşturuyoruz.
+    private CreateProductDto newProduct = new CreateProductDto("", 0, null);
+
+    // Lesson: Blazor (Form Gönderme)
+    // 'OnValidSubmit' olayı, formdaki tüm doğrulamalar
+    // (örn: [Required]) başarılı olduğunda bu metodu tetikler.
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            var httpClient = HttpClientFactory.CreateClient("ApiHttpClient");
+
+            // Lesson: HttpClient (POST İsteği)
+            // 'PostAsJsonAsync', 'newProduct' nesnesini JSON'a çevirir
+            // ve API'mizin 'POST /api/products' endpoint'ine yollar.
+            var response = await httpClient.PostAsJsonAsync("api/products", newProduct);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Başarılıysa, kullanıcıyı ana sayfaya geri yönlendir
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                Console.WriteLine("API'ye ürün eklerken hata oluştu.");
+                // (Burada kullanıcıya bir hata mesajı gösterilebilir)
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"İstek atılırken hata: {ex.Message}");
+        }
+    }
+}

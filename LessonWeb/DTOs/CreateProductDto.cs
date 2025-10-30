@@ -1,37 +1,35 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations; // Bu 'using' satırı en üstte olmalı
 
 namespace LessonWeb.DTOs
 {
-    // Lesson: DTO (Data Transfer Object)
-    // DTO'lar, katmanlar (örn: API Controller -> Servis) veya sistemler 
-    // (örn: API -> Web Tarayıcı) arasında veri taşımak için kullanılan basit sınıflardır.
-    // Asla veritabanı 'Entity'lerini (Product.cs) doğrudan API'ye açığa vurmayız.
-    // Neden? 
-    // 1. Güvenlik: (RowVersion, CreatedDate gibi hassas verileri gizleriz)
-    // 2. Esneklik: (Entity değişse bile DTO sabit kalabilir)
-    // 3. Validation: (Sadece o işleme özel doğrulama ekleyebiliriz)
-
-    // Lesson: Record (Kayıt)
-    // 'record'lar, C# 9+ ile gelen özel bir 'class' türüdür.
-    // Özellikle 'değişmez' (immutable) veri taşımak için tasarlanmıştır.
-    // Property'leri 'init' (sadece oluşturulurken değer atanabilir) olarak tanımlar.
-    // DTO'lar için mükemmeldirler.
-    public record CreateProductDto
-    (
-        // Lesson: Model Validation (DTO Seviyesi)
-        // API'ye gelen JSON verisi bu kurallara uymuyorsa,
-        // ASP.NET Core otomatik olarak '400 Bad Request' döner.
-
+    // Lesson: 'record' yerine 'class' kullanıyoruz
+    // Sebebi: Blazor'un '@bind-Value' komutu, form verisini modele yazabilmek için 'set;' accessor'ına (erişimcisine) ihtiyaç duyar.
+    // 'record' ise varsayılan olarak 'init;' kullanır ve bu da CS0852 hatasına yol açar.
+    public class CreateProductDto
+    {
         [Required(ErrorMessage = "İsim alanı zorunludur.")]
-        [StringLength(100)]
-        string Name,
-
+        public string Name { get; set; } // 'init;' DEĞİL 'set;'
 
         [Range(0.01, 10000.00)]
-        decimal Price,
+        public decimal Price { get; set; } // 'init;' DEĞİL 'set;'
+
+        public string? Description { get; set; } // 'init;' DEĞİL 'set;'
 
 
-        string? Description
-    );
+        // Lesson: Parametresiz Constructor (Yapıcı Metot)
+        // Blazor'un 'EditForm'u modelin boş bir örneğini
+        // oluşturabilmek için buna ihtiyaç duyar.
+        public CreateProductDto()
+        {
+            Name = ""; // Boş string ataması [Required] hatasını tetiklemez
+        }
+
+        // AddProduct.razor'da 'new CreateProductDto("", 0, null)' yazdığın satırın çalışmaya devam etmesi için bu constructor'ı da ekliyoruz.
+        public CreateProductDto(string name, decimal price, string? description)
+        {
+            Name = name;
+            Price = price;
+            Description = description;
+        }
+    }
 }

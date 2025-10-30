@@ -66,7 +66,7 @@ namespace Lesson.Services
             // 'WHERE p.Price > 10' SQL sorgusuna karşılık gelir. Sadece fiyatı 10'dan büyük olanları getirir.
             var productsList = await repo.GetAllAsync();
 
-            var filterList = productsList.Where(p=> p.Price >  0);
+            var filterList = productsList.Where(p=> p.Price >  0 ).OrderBy(p=>p.Id);
 
             // Lesson : IQueryable vs IEnumerable 
             // Iqueryable, sorgunun veritabanında oluşturulmasını sağlar. Sorgu üzerinde ek filtreler eklenebilir.

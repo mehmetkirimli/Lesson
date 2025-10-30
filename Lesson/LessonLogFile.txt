@@ -149,3 +149,235 @@ Status : 200
 Süre   : 0 ms
 Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
 
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:42:11.174 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 1170 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:42:11.290 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 10 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:42:11.620 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=ErEd4fxcW6eDBl5Yy7xuZw
+Status : 101
+Süre   : 287 ms
+Özet   : HTTP Request Handled GET /productHub?id=ErEd4fxcW6eDBl5Yy7xuZw => Responded 101
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:42:11.987 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 94 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:42:12.007 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 1 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:43:01.326 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /api/Products
+Status : 201
+Süre   : 4552 ms
+Özet   : HTTP Request Handled POST /api/Products => Responded 201
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:43:39.196 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /api/Products
+Status : 201
+Süre   : 17 ms
+Özet   : HTTP Request Handled POST /api/Products => Responded 201
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:07.425 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=x_UxUcQ6MwPpkbvWPfcR9g
+Status : 101
+Süre   : 115411 ms
+Özet   : HTTP Request Handled GET /productHub?id=x_UxUcQ6MwPpkbvWPfcR9g => Responded 101
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:26.330 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 4 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:26.341 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 0 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:26.356 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=ajrmrOxBnUbk17Ku9Mwxtg
+Status : 101
+Süre   : 9 ms
+Özet   : HTTP Request Handled GET /productHub?id=ajrmrOxBnUbk17Ku9Mwxtg => Responded 101
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:26.565 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 6 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:26.586 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 0 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:40.418 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=MRA5drxtLi84ZEmPfhL_eQ
+Status : 101
+Süre   : 13824 ms
+Özet   : HTTP Request Handled GET /productHub?id=MRA5drxtLi84ZEmPfhL_eQ => Responded 101
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:48.910 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 6 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 13:44:48.930 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 0 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:02.358 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 1096 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:02.470 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 8 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:02.771 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=Vokic8iBAykl8uXu3BD8fw
+Status : 101
+Süre   : 265 ms
+Özet   : HTTP Request Handled GET /productHub?id=Vokic8iBAykl8uXu3BD8fw => Responded 101
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:03.075 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 58 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:03.087 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 0 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:07.204 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=K0ZdEDecxgCBCdTNOj1_9g
+Status : 101
+Süre   : 4111 ms
+Özet   : HTTP Request Handled GET /productHub?id=K0ZdEDecxgCBCdTNOj1_9g => Responded 101
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:14.315 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 23 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:14.330 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 0 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:42.391 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /api/products
+Status : 201
+Süre   : 294 ms
+Özet   : HTTP Request Handled POST /api/products => Responded 201
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:42.431 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /api/products
+Status : 200
+Süre   : 5 ms
+Özet   : HTTP Request Handled GET /api/products => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:42.446 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : POST /productHub/negotiate?negotiateVersion=1
+Status : 200
+Süre   : 0 ms
+Özet   : HTTP Request Handled POST /productHub/negotiate?negotiateVersion=1 => Responded 200
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 14:39:49.448 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=v1JMdCjIhuPEZV1aDx9Jkg
+Status : 101
+Süre   : 6997 ms
+Özet   : HTTP Request Handled GET /productHub?id=v1JMdCjIhuPEZV1aDx9Jkg => Responded 101
+
+----------------------------------------------------------------------
+Tarih : 2025-10-29 15:25:55.436 (UTC)
+Kaynak : SimpleLoggingMiddleware
+İşlem  : GET /productHub?id=yLhwHB3tlGP5wdOwep9aHQ
+Status : 101
+Süre   : 2801099 ms
+Özet   : HTTP Request Handled GET /productHub?id=yLhwHB3tlGP5wdOwep9aHQ => Responded 101
+
